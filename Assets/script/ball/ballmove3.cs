@@ -18,7 +18,7 @@ public class ballmove3 : MonoBehaviour
     // Update is called once per frame
     void Update()
     {
-        
+        if (Input.GetKey(KeyCode.Mouse0)) {
             Vector3 mouse = Input.mousePosition;//Get the mouse Position
             Ray castPoint = Camera.main.ScreenPointToRay(mouse);//Cast a ray to get where the mouse is pointing at
             RaycastHit hit;//Stores the position where the ray hit.
@@ -27,6 +27,8 @@ public class ballmove3 : MonoBehaviour
                 nmAgent.SetDestination(hit.point);
                 //this.transform.position = hit.point;//Move the target to the mouse position
             }
+        }
+            
         
     }
 }
