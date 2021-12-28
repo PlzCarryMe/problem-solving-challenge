@@ -9,12 +9,9 @@ public class RandomSpawn : MonoBehaviour
 
     Transform test;
 
-    //public float spawnTime;
     public float spawnDelay;
     float ElapsedTime = 0;
     int state;
-    //public bool stopSpawning = false;
-    //public int stop;
 
     public int currspawn = 0;
     public int maxspawn;
@@ -26,19 +23,11 @@ public class RandomSpawn : MonoBehaviour
         center = test.position;
         maxspawn = Random.Range(10, 25);
         state = 0;
-        //stop = 0;
-        //InvokeRepeating("SpawnObject", spawnTime, spawnDelay);
     }
 
     // Update is called once per frame
     void Update()
     {
-        //if (stop == 1 && stopSpawning == false)
-        //{
-        //    InvokeRepeating("SpawnObject", spawnTime, spawnDelay);
-        //    stop = 0;
-        //}
-
         SpawnObject();
     }
 
@@ -51,11 +40,6 @@ public class RandomSpawn : MonoBehaviour
 
         int randomInt = Random.Range(0, spawnees.Length);
 
-        //if (stopSpawning)
-        //{
-        //    stop = 1;
-        //    CancelInvoke("SpawnObject");
-        //}
         if (state == 0)
         {
             if (currspawn < maxspawn)
