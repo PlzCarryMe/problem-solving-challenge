@@ -3,16 +3,18 @@ using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.UI;
 
-public class scorecontroller : MonoBehaviour
+public class scorecontroller2 : MonoBehaviour
 {
     public static int score;
     public Text textscore;
+    public RandomSpawn currentcube;
 
     // Start is called before the first frame update
     void Start()
     {
         score = 0;
         textscore = GameObject.Find("score").GetComponent<Text>();
+        currentcube = GameObject.Find("spawnpoint").GetComponent<RandomSpawn>();
     }   
 
     // Update is called once per frame
@@ -21,20 +23,11 @@ public class scorecontroller : MonoBehaviour
         
     }
 
-    private void Awake()
+    public void addScore()
     {
-        score = 0;
-    }
-
-    public void OnCollisionEnter(Collision col)
-    {    
-        if (col.gameObject.name == "ball")
-        {
-            Destroy(gameObject);
-            score++;
-            textscore.text = score.ToString();   
-        }
-        
+        score++;
+        textscore.text = score.ToString();
+        currentcube.decreasecube();
     }
 
 }

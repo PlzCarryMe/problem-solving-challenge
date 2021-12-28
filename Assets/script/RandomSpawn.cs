@@ -9,8 +9,12 @@ public class RandomSpawn : MonoBehaviour
 
     Transform test;
 
-    public float spawnTime;
+    //public float spawnTime;
     public float spawnDelay;
+    float ElapsedTime = 0;
+    int state;
+    //public bool stopSpawning = false;
+    //public int stop;
 
     public int currspawn = 0;
     public int maxspawn;
@@ -21,14 +25,21 @@ public class RandomSpawn : MonoBehaviour
         test = GetComponent<Transform>();
         center = test.position;
         maxspawn = Random.Range(10, 25);
-        InvokeRepeating("SpawnObject", spawnTime, spawnDelay);
+        state = 0;
+        //stop = 0;
+        //InvokeRepeating("SpawnObject", spawnTime, spawnDelay);
     }
 
     // Update is called once per frame
     void Update()
     {
-        InvokeRepeating("SpawnObject", spawnTime, spawnDelay);
+        //if (stop == 1 && stopSpawning == false)
+        //{
+        //    InvokeRepeating("SpawnObject", spawnTime, spawnDelay);
+        //    stop = 0;
+        //}
 
+        SpawnObject();
     }
 
     public void SpawnObject()
@@ -40,13 +51,49 @@ public class RandomSpawn : MonoBehaviour
 
         int randomInt = Random.Range(0, spawnees.Length);
 
-        if (currspawn < maxspawn)
+        //if (stopSpawning)
+        //{
+        //    stop = 1;
+        //    CancelInvoke("SpawnObject");
+        //}
+        if (state == 0)
         {
-            Instantiate(spawnees[randomInt], pos, Quaternion.identity);
-            currspawn++;
+            if (currspawn < maxspawn)
+            {
+                Instantiate(spawnees[randomInt], pos, Quaternion.identity);
+                currspawn++;
+            }
+
+            if (currspawn == maxspawn)
+            {
+                spawnDelay = 3;
+                state = 1;
+            }
         }
- 
+        else if (state == 1)
+        {
+            ElapsedTime += Time.deltaTime;
+
+            if (currspawn < maxspawn)
+            {
+                if (ElapsedTime >= spawnDelay)
+                {
+                    Instantiate(spawnees[randomInt], pos, Quaternion.identity);
+                    currspawn++;
+                    ElapsedTime = 0;
+                }
+            }
+            else if (currspawn == maxspawn)
+            {
+                ElapsedTime = 0;
+            }
+        }
+        
     }
 
+    public void decreasecube()
+    {
+        currspawn--;
+    }
 
 }
